@@ -90,12 +90,13 @@ TEST_P(Test, Run)
     auto cin_rd = std::cin.rdbuf(in.rdbuf());
     auto cout_rd = std::cout.rdbuf(out.rdbuf());
 
-    EXPECT_NO_THROW(test());
+    std::shared_ptr<std::nullptr_t> _ = {nullptr, [&](void*)
+    {
+        std::cin.rdbuf(cin_rd);
+        std::cout.rdbuf(cout_rd);
+    }};
 
-    std::cin.rdbuf(cin_rd);
-    std::cout.rdbuf(cout_rd);
-
-    ASSERT_FALSE(HasFailure()) << "Execution failed.";
+    ASSERT_NO_THROW(test());
 
     std::ifstream expected_output(GetParam().output_path);
 
@@ -105,9 +106,15 @@ TEST_P(Test, Run)
 
         const auto end = std::istream_iterator<std::string>();
 
+        bool did_fail = false;
+
         while(outputed != end && expected != end)
         {
-            EXPECT_EQ(*expected, *outputed);
+            if (!did_fail)
+                EXPECT_EQ(*expected, *outputed);
+
+            did_fail = did_fail || (*expected != *outputed);
+
             ++outputed;
             ++expected;
         }

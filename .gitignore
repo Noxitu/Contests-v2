@@ -1,3 +1,11 @@
+# VS Code settings are managed by plugins entirely (at least for now)
 .vscode
+
+# Default build directory is predefined by VS Code Plugin
 build
+
+# Tests are heavy
 */test/
+
+# current.cmake will have a lot of changes that are not worthy of versioning
+current.cmake
