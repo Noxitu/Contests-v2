@@ -5,6 +5,4 @@ set(CMAKE_PREFIX_PATH "D:/Sources/3rdparties/ninja-install/all" CACHE filepath "
 
 include("common.cmake")
 
-add_compile_options("$<$<BOOL:${MSVC}>:/std:c++17>")
-
 round("Potyczki Algorytmiczne 2018")

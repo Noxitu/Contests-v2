@@ -9,3 +9,6 @@ build
 
 # current.cmake will have a lot of changes that are not worthy of versioning
 current.cmake
+
+# Distributed tasks come with header files
+*/src/provided_headers/

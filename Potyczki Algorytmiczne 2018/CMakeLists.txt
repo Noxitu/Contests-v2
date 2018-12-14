@@ -10,3 +10,6 @@ task(her)
 # Round 3
 task(pal)
 task(mag)
+
+# Round 4
+task(tea DISTRIBUTED)
