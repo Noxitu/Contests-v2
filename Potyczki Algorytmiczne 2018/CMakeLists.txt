@@ -13,3 +13,4 @@ task(mag)
 
 # Round 4
 task(tea DISTRIBUTED)
+task(fut DISTRIBUTED)

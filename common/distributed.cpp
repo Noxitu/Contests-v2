@@ -129,6 +129,8 @@ void Send(int target)
 
     index += 1;
     node_write_offsets.at(target) = 0;
+
+    std::cerr << "    @ Sent at " << std::chrono::duration_cast<std::chrono::milliseconds>(duration::duration).count() << std::endl;
 }
 
 template<typename T>
@@ -139,9 +141,12 @@ T GetImpl(int source)
     int &offset = node_read_offsets.at(source);
 
     const auto &message = messages->at(index).data;
-    if (offset+sizeof(T) < message.size())
+    if (offset+sizeof(T) > message.size())
     {
         std::cerr << "    Reading message after it ended." << std::endl;
+        std::cerr << "      reading at " << offset << std::endl;
+        std::cerr << "      reading length " << sizeof(T) << std::endl;
+        std::cerr << "      message length " << message.size() << std::endl;
         throw 42;
     }
 
@@ -157,6 +162,8 @@ long long GetLL(int source) { return GetImpl<long long>(source); }
 int Receive(int source)
 {
     duration::update();
+
+    std::cerr << "    @ Receive started at " << std::chrono::duration_cast<std::chrono::milliseconds>(duration::duration).count() << std::endl;
 
     if (source == -1)
     {
@@ -216,6 +223,8 @@ int Receive(int source)
     const Message &message = messages->at(index);
 
     duration::update(message.timestamp);
+
+    std::cerr << "    @ Receive completed at " << std::chrono::duration_cast<std::chrono::milliseconds>(duration::duration).count() << std::endl;
 
     return source;
 }

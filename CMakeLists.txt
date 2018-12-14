@@ -5,4 +5,6 @@ set(CMAKE_PREFIX_PATH "D:/Sources/3rdparties/ninja-install/all" CACHE filepath "
 
 include("common.cmake")
 
+add_subdirectory("library")
+
 round("Potyczki Algorytmiczne 2018")
